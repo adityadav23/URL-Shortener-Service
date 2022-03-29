@@ -20,13 +20,11 @@ async function shortenUrl(req,res){
     if (validUrl.isUri(longUrl)) {
         try {
             //find if longUrl already in database
-            let url = await Url.findOne({
-                longUrl
-            })
+            let url = await Url.findOne({  longUrl })
 
             // url exist and return the respose
             if (url) {
-                res.json(url)
+              return  res.json(url)
             } else {
                 // join the generated short code the the base url
                 const shortUrl = baseUrl + '/' + urlCode
@@ -45,10 +43,10 @@ async function shortenUrl(req,res){
         // exception handler
         catch (err) {
             console.log(err)
-            res.status(500).json('Server Error')
+           return res.status(500).json('Server Error')
         }
     } else {
-        res.status(401).json('Invalid longUrl')
+        return res.status(401).json('Invalid longUrl')
     }
 }
 
